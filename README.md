@@ -1,0 +1,2 @@
+# yandexdns
+Yandex DNS updater

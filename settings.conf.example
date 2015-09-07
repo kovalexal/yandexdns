@@ -1,0 +1,12 @@
+{
+    "ttl" : 600,
+    "domains" : [
+        {
+            "domain"  : "domain.com",
+            "PddToken"   : "123456789ABCDEF0000000000000000000000000000000000000",
+            "subdomains" : [
+                "@", "www", "my"
+            ]
+        }
+   ]
+}

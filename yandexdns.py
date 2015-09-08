@@ -6,8 +6,9 @@ import json
 import argparse
 try:
     from urllib.request import urlopen, Request
+    from urllib.error import HTTPError
 except ImportError:
-    from urllib2 import urlopen, Request
+    from urllib2 import urlopen, Request, HTTPError
 
 
 
@@ -48,10 +49,14 @@ class YandexDNSUpdater:
         })
 
         # Make a request and get response from server
-        data = urlopen(req).read()
+        try:
+            handler = urlopen(req)
+            contents = handler.read()
+        except HTTPError as e:
+            contents = e.read()
 
         # Decode response
-        result = json.loads(data.decode('utf-8'))
+        result = json.loads(contents.decode('utf-8'))
         if result['success'] != 'ok':
             raise Exception(result['error'])
 
@@ -71,10 +76,14 @@ class YandexDNSUpdater:
         })
 
         # Make a request and get response from server
-        data = urlopen(req).read()
+        try:
+            handler = urlopen(req)
+            contents = handler.read()
+        except HTTPError as e:
+            contents = e.read()
 
         # Decode response
-        result = json.loads(data.decode('utf-8'))
+        result = json.loads(contents.decode('utf-8'))
         if result['success'] != 'ok':
             raise Exception(result['error'])
 

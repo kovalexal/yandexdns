@@ -2,13 +2,17 @@
 
 YANDEXDNS=/tmp/mnt/FLASH/yandexdns
 
-python3 $YANDEXDNS/yandexdns.py $YANDEXDNS/settings.conf --ip $1
+if which python3 >/dev/null; then
+    python3 $YANDEXDNS/yandexdns.py $YANDEXDNS/settings.conf --ip $1
 
-if [ $? -ne 0 ]; then
-    logger -t YANDEXDNS 'Updating DDNS finished successfully'
-    /sbin/ddns_custom_updated 1
+    if [ $? -ne 0 ]; then
+        logger -t YANDEXDNS 'Updating DDNS finished successfully'
+        /sbin/ddns_custom_updated 1
+    else
+        logger -t YANDEXDNS 'Updating DDNS failed'
+        /sbin/ddns_custom_updated 0
+    fi
 else
-    logger -t YANDEXDNS 'Updating DDNS failed'
     /sbin/ddns_custom_updated 0
 fi
 
